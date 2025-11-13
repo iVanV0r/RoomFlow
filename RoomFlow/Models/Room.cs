@@ -71,7 +71,7 @@ namespace RoomFlow.Models
 	}
 
 	// Класс для истории бронирований/заселений
-	public class Booking
+	public class RoomBooking
 	{
 		public int Id { get; set; }
 

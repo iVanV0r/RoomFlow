@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RoomFlow.Models
 {
-	public class BookingService
+	public class Service
 	{
 		public int Id { get; set; }
 
@@ -58,6 +58,6 @@ namespace RoomFlow.Models
 		public int? MaxGuests { get; set; }
 
 		// Навигационные свойства
-		public ICollection<BookingService> BookingServices { get; set; } = new List<BookingService>();
+		public ICollection<Service> Services { get; set; } = new List<Service>();
 	}
 }

@@ -10,5 +10,7 @@ namespace RoomFlow.Data
 			: base(options) { }
 
 		public DbSet<Employee> Employees => Set<Employee>();
+		public DbSet<Room> Rooms => Set<Room>();
+		public DbSet<Client> Clients => Set<Client>();
 	}
 }

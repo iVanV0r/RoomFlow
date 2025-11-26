@@ -1,0 +1,41 @@
+@model RoomFlow.Models.AdditionalService
+
+@{
+	ViewData["Title"] = "Информация о дополнительной услуге";
+}
+
+<h1>Информация о дополнительной услуге</h1>
+<hr />
+
+<dl class="row">
+	<dt class="col-sm-3">Название</dt>
+	<dd class="col-sm-9">@Model.Name</dd>
+
+	<dt class="col-sm-3">Описание</dt>
+	<dd class="col-sm-9">@Model.Description</dd>
+
+	<dt class="col-sm-3">Категория</dt>
+	<dd class="col-sm-9">@Model.Category</dd>
+
+	<dt class="col-sm-3">Стоимость</dt>
+	<dd class="col-sm-9">@Model.Price.ToString("C") @Model.PriceType</dd>
+
+	<dt class="col-sm-3">Доступна для бронирования</dt>
+	<dd class="col-sm-9">@(Model.IsAvailable ? "Да" : "Нет")</dd>
+
+	@if (Model.DurationMinutes.HasValue)
+	{
+		<dt class="col-sm-3">Время выполнения</dt>
+		<dd class="col-sm-9">@Model.DurationMinutes минут</dd>
+	}
+
+	<dt class="col-sm-3">Требуется предварительное бронирование</dt>
+	<dd class="col-sm-9">@(Model.RequiresReservation ? "Да" : "Нет")</dd>
+
+	<dt class="col-sm-3">Дата создания</dt>
+	<dd class="col-sm-9">@Model.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
+<a asp-action="Index" class="btn btn-secondary">Назад</a>
+

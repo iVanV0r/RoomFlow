@@ -12,5 +12,6 @@ namespace RoomFlow.Data
 		public DbSet<Employee> Employees => Set<Employee>();
 		public DbSet<Room> Rooms => Set<Room>();
 		public DbSet<Client> Clients => Set<Client>();
+		public DbSet<Payment> Payments => Set<Payment>();
 	}
 }

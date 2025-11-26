@@ -1,0 +1,68 @@
+﻿@model Payment
+
+@{
+    ViewData["Title"] = "Добавление платежа";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>@ViewData["Title"]</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="BookingId" class="form-label"></label>
+                                    <input asp-for="BookingId" class="form-control" />
+                                    <span asp-validation-for="BookingId" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="Amount" class="form-label"></label>
+                                    <input asp-for="Amount" class="form-control" />
+                                    <span asp-validation-for="Amount" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="PaymentMethod" class="form-label"></label>
+                                    <select asp-for="PaymentMethod" class="form-select"
+                                            asp-items="Html.GetEnumSelectList<PaymentMethod>()"></select>
+                                    <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Status" class="form-label"></label>
+                                    <select asp-for="Status" class="form-select"
+                                            asp-items="Html.GetEnumSelectList<PaymentStatus>()"></select>
+                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="PaymentDate" class="form-label"></label>
+                                    <input asp-for="PaymentDate" class="form-control" />
+                                    <span asp-validation-for="PaymentDate" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="TransactionId" class="form-label"></label>
+                                    <input asp-for="TransactionId" class="form-control" />
+                                    <span asp-validation-for="TransactionId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Notes" class="form-label"></label>
+                            <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Notes" class="text-danger"></span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">Создать</button>
+                            <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

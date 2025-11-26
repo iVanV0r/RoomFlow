@@ -1,0 +1,92 @@
+﻿@model Payment
+
+@{
+    ViewData["Title"] = $"Платеж #{Model.Id}";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>@ViewData["Title"]</h1>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
+            <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Основная информация</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">ID бронирования:</dt>
+                        <dd class="col-sm-8">
+                            <a asp-controller="Bookings" asp-action="Details" asp-route-id="@Model.BookingId">
+                                #@Model.BookingId
+                            </a>
+                        </dd>
+
+                        <dt class="col-sm-4">Сумма:</dt>
+                        <dd class="col-sm-8">@Model.Amount.ToString("C")</dd>
+
+                      @*   <dt class="col-sm-4">Способ оплаты:</dt>
+                        <dd class="col-sm-8">@GetDisplayName(Model.PaymentMethod)</dd>
+
+                        <dt class="col-sm-4">Статус:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge @GetStatusBadgeClass(Model.Status)">
+                                @GetDisplayName(Model.Status)
+                            </span>
+                        </dd> *@
+
+                        <dt class="col-sm-4">Дата оплаты:</dt>
+                        <dd class="col-sm-8">@Model.PaymentDate.ToString("dd.MM.yyyy HH:mm")</dd>
+
+                        <dt class="col-sm-4">ID транзакции:</dt>
+                        <dd class="col-sm-8">@(Model.TransactionId ?? "—")</dd>
+
+                        <dt class="col-sm-4">Платежная система:</dt>
+                        <dd class="col-sm-8">@(Model.PaymentGateway ?? "—")</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Дополнительная информация</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Валюта:</dt>
+                        <dd class="col-sm-8">@Model.Currency</dd>
+
+                        <dt class="col-sm-4">Курс:</dt>
+                        <dd class="col-sm-8">@Model.ExchangeRate</dd>
+
+                        <dt class="col-sm-4">Исходная сумма:</dt>
+                        <dd class="col-sm-8">@Model.OriginalAmount.ToString("C")</dd>
+
+                        <dt class="col-sm-4">Дата создания:</dt>
+                        <dd class="col-sm-8">@Model.CreatedDate.ToString("dd.MM.yyyy HH:mm")</dd>
+                    </dl>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.Notes))
+            {
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5>Примечания</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>@Model.Notes</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

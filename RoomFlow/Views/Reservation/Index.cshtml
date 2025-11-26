@@ -8,12 +8,12 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>История бронирований номера</h1>
-        <a asp-action="Index" class="btn btn-secondary">Назад к номерам</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Назад к номерам</a>
     </div>
 
     <div class="card">
         <div class="card-body">
-            @if (Model.Any())
+            @if (Model != null)
             {
                 <div class="table-responsive">
                     <table class="table table-striped">

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<RoomFlow.Models.Booking>
+
+@{
+    ViewData["Title"] = "История бронирований";
+    var roomId = ViewContext.RouteData.Values["id"];
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>История бронирований номера</h1>
+        <a asp-action="Index" class="btn btn-secondary">Назад к номерам</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID брони</th>
+                                <th>Гость</th>
+                                <th>Дата заезда</th>
+                                <th>Дата выезда</th>
+                                <th>Статус</th>
+                                <th>Общая стоимость</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var booking in Model)
+                            {
+                                <tr>
+                                    <td>@booking.Id</td>
+                                    <td>@booking.GuestName</td>
+                                    <td>@booking.CheckInDate.ToString("dd.MM.yyyy")</td>
+                                    <td>@booking.CheckOutDate.ToString("dd.MM.yyyy")</td>
+                                    <td>
+                                        <span class="badge bg-info">@booking.Status</span>
+                                    </td>
+                                    <td>@booking.TotalPrice.ToString("C")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <h5>Бронирования не найдены</h5>
+                    <p>Для этого номера еще не было бронирований.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

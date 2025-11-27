@@ -1,0 +1,57 @@
+@model IEnumerable<RoomFlow.Models.Room>
+
+@{
+    ViewData["Title"] = "Свободные номера";
+}
+
+<!-- Кнопка авторизации вверху страницы -->
+<div class="d-flex justify-content-end mb-4">
+    <a asp-controller="Account" asp-action="Login" class="btn btn-primary">
+        Авторизация
+    </a>
+</div>
+
+<h1 class="mb-4">Свободные номера</h1>
+
+<div class="row">
+@foreach (var room in Model)
+{
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+
+            <!-- Картинка (поставь ссылку в room.ImageUrl или статическую ссылку) -->
+            <img src="https://cdn.worldota.net/t/x500/content/9d/8b/9d8b9ee58e2e8e86ff2553875fcd810e65274647.jpeg" 
+     class="card-img-top" alt="@room.RoomType" style="height:220px; object-fit:cover;" />
+
+
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">@room.RoomType (№@room.RoomNumber)</h5>
+                <p class="card-text">
+                    Этаж: <strong>@room.Floor</strong><br />
+                    Мест: <strong>@room.Capacity</strong><br />
+                    Цена: <strong>@room.BasePricePerNight ₽ / ночь</strong>
+                </p>
+
+                @if (!string.IsNullOrEmpty(room.Description))
+                {
+                    <p class="card-text"><small>@room.Description</small></p>
+                }
+
+                @if (!string.IsNullOrEmpty(room.Amenities))
+                {
+                    <p class="card-text"><small>Удобства: @room.Amenities</small></p>
+                }
+
+                <div class="mt-auto">
+                    <a asp-controller="Bookings"
+                       asp-action="Create"
+                       asp-route-roomId="@room.Id"
+                       class="btn btn-success w-100">
+                        Забронировать
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+</div>

@@ -1,0 +1,41 @@
+@model IEnumerable<RoomFlow.Models.Client>
+
+@{
+    ViewData["Title"] = "Информация о клиенте";
+}
+
+<h1 class="mb-3">Информация о клиенте</h1>
+<hr />
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">ФИО</dt>
+            <dd class="col-sm-8">@Model.FullName</dd>
+
+            <dt class="col-sm-4 text-muted">Email</dt>
+            <dd class="col-sm-8">@Model.Email</dd>
+
+            <dt class="col-sm-4 text-muted">Дата рождения</dt>
+            <dd class="col-sm-8">@Model.DateOfBorn.ToShortDateString()</dd>
+
+            <dt class="col-sm-4 text-muted">Пол</dt>
+            <dd class="col-sm-8">@Model.Gender</dd>
+
+            <dt class="col-sm-4 text-muted">Паспорт</dt>
+            <dd class="col-sm-8">@Model.Passport</dd>
+
+            <dt class="col-sm-4 text-muted">Телефон</dt>
+            <dd class="col-sm-8">@Model.Phone</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between">
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        Назад к списку
+    </a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info text-white">
+        Редактировать
+    </a>
+</div>

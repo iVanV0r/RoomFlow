@@ -22,12 +22,9 @@ namespace RoomFlow.Controllers
 			return View(employees);
 		}
 
-		// GET: Employees/Details/5
-		public async Task<IActionResult> Details(int? id)
+		// GET: Employees/Details/id
+		public async Task<IActionResult> Details(int id)
 		{
-			if (id == null)
-				return NotFound();
-
 			var employee = await _context.Employees
 				.FirstOrDefaultAsync(m => m.Id == id);
 
@@ -45,62 +42,47 @@ namespace RoomFlow.Controllers
 
 		// POST: Employees/Create
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(Employee employee)
 		{
-			if (ModelState.IsValid)
-			{
-				_context.Add(employee);
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
-			return View(employee);
+			if (!ModelState.IsValid)
+				return View(employee);
+
+			_context.Add(employee);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
 		}
 
-		// GET: Employees/Edit/5
-		public async Task<IActionResult> Edit(int? id)
+		// GET: Employees/Edit/id
+		public async Task<IActionResult> Edit(int id)
 		{
-			if (id == null)
-				return NotFound();
+			var employee = await GetEmployeeById(id);
 
-			var employee = await _context.Employees.FindAsync(id);
 			if (employee == null)
 				return NotFound();
 
 			return View(employee);
 		}
 
-		// POST: Employees/Edit/5
+		// POST: Employees/Edit/id
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int id, Employee employee)
 		{
 			if (id != employee.Id)
 				return NotFound();
 
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					_context.Update(employee);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!EmployeeExists(employee.Id))
-						return NotFound();
-					else
-						throw;
-				}
-				return RedirectToAction(nameof(Index));
-			}
-			return View(employee);
+			if (!ModelState.IsValid)
+				return View(employee);
+
+			_context.Update(employee);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
 		}
 
-		// GET: Employees/Delete/5
-		public async Task<IActionResult> Delete(int? id)
+		// GET: Employees/Delete/id
+		public async Task<IActionResult> Delete(int id)
 		{
-			if (id == null)
-				return NotFound();
-
 			var employee = await _context.Employees
 				.FirstOrDefaultAsync(m => m.Id == id);
 
@@ -110,22 +92,22 @@ namespace RoomFlow.Controllers
 			return View(employee);
 		}
 
-		// POST: Employees/Delete/5
+		// POST: Employees/DeleteComfirmed/id
 		[HttpPost]
-		public async Task<IActionResult> Delete(int id)
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			var employee = await _context.Employees.FindAsync(id);
-			if (employee != null)
-			{
-				_context.Employees.Remove(employee);
-				await _context.SaveChangesAsync();
-			}
+			var employee = await GetEmployeeById(id);
+
+			if (employee == null)
+				return NotFound();
+
+			_context.Remove(employee);
+			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
 		}
 
-		private bool EmployeeExists(int id)
-		{
-			return _context.Employees.Any(e => e.Id == id);
-		}
+		private async Task<Employee?> GetEmployeeById(int id) =>
+			await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
 	}
 }

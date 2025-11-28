@@ -1,33 +1,32 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RoomFlow.Application.Interfaces;
 using RoomFlow.Data;
 using RoomFlow.Models;
+using System.Diagnostics;
 
 namespace RoomFlow.Controllers
 {
 	public class EmployeesController : Controller
 	{
-		private readonly ApplicationDbContext _context;
+		private readonly IEmployeeService _employeeService;
 
-		public EmployeesController(ApplicationDbContext context)
+		public EmployeesController(IEmployeeService employeeService)
 		{
-			_context = context;
+			_employeeService = employeeService;
 		}
 
 		// GET: Employees
 		public async Task<IActionResult> Index()
 		{
-			var employees = await _context.Employees.ToListAsync();
+			var employees = await _employeeService.GetAllAsync();
 			return View(employees);
 		}
 
 		// GET: Employees/Details/id
 		public async Task<IActionResult> Details(int id)
 		{
-			var employee = await _context.Employees
-				.FirstOrDefaultAsync(m => m.Id == id);
-
+			var employee = await _employeeService.GetByIdAsync(id);
 			if (employee == null)
 				return NotFound();
 
@@ -48,16 +47,14 @@ namespace RoomFlow.Controllers
 			if (!ModelState.IsValid)
 				return View(employee);
 
-			_context.Add(employee);
-			await _context.SaveChangesAsync();
+			await _employeeService.AddAsync(employee);
 			return RedirectToAction(nameof(Index));
 		}
 
 		// GET: Employees/Edit/id
 		public async Task<IActionResult> Edit(int id)
 		{
-			var employee = await GetEmployeeById(id);
-
+			var employee = await _employeeService.GetByIdAsync(id);
 			if (employee == null)
 				return NotFound();
 
@@ -75,39 +72,27 @@ namespace RoomFlow.Controllers
 			if (!ModelState.IsValid)
 				return View(employee);
 
-			_context.Update(employee);
-			await _context.SaveChangesAsync();
+			await _employeeService.UpdateAsync(employee);
 			return RedirectToAction(nameof(Index));
 		}
 
 		// GET: Employees/Delete/id
 		public async Task<IActionResult> Delete(int id)
 		{
-			var employee = await _context.Employees
-				.FirstOrDefaultAsync(m => m.Id == id);
-
+			var employee = await _employeeService.GetByIdAsync(id);
 			if (employee == null)
 				return NotFound();
 
 			return View(employee);
 		}
 
-		// POST: Employees/DeleteComfirmed/id
-		[HttpPost]
+		// POST: Employees/DeleteConfirmed/id
+		[HttpPost, ActionName("DeleteConfirmed")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			var employee = await GetEmployeeById(id);
-
-			if (employee == null)
-				return NotFound();
-
-			_context.Remove(employee);
-			await _context.SaveChangesAsync();
+			await _employeeService.DeleteAsync(id);
 			return RedirectToAction(nameof(Index));
 		}
-
-		private async Task<Employee?> GetEmployeeById(int id) =>
-			await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
 	}
 }

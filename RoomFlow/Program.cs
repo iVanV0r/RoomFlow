@@ -1,5 +1,10 @@
-using RoomFlow.Data;
 using Microsoft.EntityFrameworkCore;
+using RoomFlow.Application.Interfaces;
+using RoomFlow.Application.Services;
+using RoomFlow.Data;
+using RoomFlow.Infrastructure;
+using RoomFlow.Infrastructure.Interfaces;
+using RoomFlow.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +18,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Репозитории
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+// UnitOfWork
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// EmployeeService
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 var app = builder.Build();
 

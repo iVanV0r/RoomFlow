@@ -1,19 +1,20 @@
-﻿using RoomFlow.Application.Factories.Interfaces;
+﻿using RoomFlow.Application.Builder.Interfaces;
 using RoomFlow.Application.Interfaces;
 using RoomFlow.Infrastructure.Interfaces;
 using RoomFlow.Models;
+using System.Numerics;
 
 namespace RoomFlow.Application.Services
 {
 	public class EmployeeService : IEmployeeService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IEntityFactory _factory;
+		private readonly IEmployeeBuilder _builder;
 
-		public EmployeeService(IUnitOfWork unitOfWork, IEntityFactory factory)
+		public EmployeeService(IUnitOfWork unitOfWork, IEmployeeBuilder builder)
 		{
 			_unitOfWork = unitOfWork;
-			_factory = factory;
+			_builder = builder;
 		}
 
 		public async Task<List<Employee>> GetAllAsync()
@@ -31,7 +32,14 @@ namespace RoomFlow.Application.Services
 			if (e == null)
 				throw new ArgumentNullException(nameof(e));
 
-			var employee = _factory.CreateEmployee(e.FullName, e.Position, e.Salary, e.HireDate, e.Email, e.Phone);
+			var employee = _builder
+				.SetFullName(e.FullName)
+				.SetPosition(e.Position)
+				.SetSalary(e.Salary)
+				.SetEmail(e.Email ?? "")
+				.SetPhone(e.Phone ?? "")
+				.Build();
+
 			await _unitOfWork.Employees.AddAsync(employee);
 			await _unitOfWork.SaveChangesAsync();
 		}

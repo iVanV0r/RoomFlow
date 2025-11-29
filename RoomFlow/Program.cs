@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using RoomFlow.Application.Builder;
+using RoomFlow.Application.Builder.Interfaces;
 using RoomFlow.Application.Interfaces;
 using RoomFlow.Application.Services;
 using RoomFlow.Data;
@@ -27,6 +29,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // EmployeeService
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+builder.Services.AddScoped<IEmployeeBuilder, EmployeeBuilder>();
 
 var app = builder.Build();
 

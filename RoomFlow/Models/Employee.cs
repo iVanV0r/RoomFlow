@@ -5,7 +5,7 @@ namespace RoomFlow.Models
 {
 	public class Employee
 	{
-		public int Id { get; private set; }
+		public int Id { get; set; }
 
 		private string _fullName = string.Empty;
 		[Required(ErrorMessage = "Введите полное имя сотрудника")]

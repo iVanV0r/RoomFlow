@@ -1,27 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RoomFlow.Data;
-using RoomFlow.Models;
-
+using RoomFlow.Application.Interfaces;
+using System.Threading.Tasks;
 
 namespace RoomFlow.Controllers
 {
     public class ClientRoomsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IClientRoomService _roomService;
 
-        public ClientRoomsController(ApplicationDbContext context)
+        public ClientRoomsController(IClientRoomService roomService)
         {
-            _context = context;
+            _roomService = roomService;
         }
 
-        // Страница для клиентов — показываем свободные номера
         public async Task<IActionResult> Index()
         {
-            var freeRooms = await _context.Rooms
-                .Where(r => r.Status == RoomStatus.Available)
-                .ToListAsync();
-
+            var freeRooms = await _roomService.GetAvailableRoomsAsync();
             return View(freeRooms);
         }
     }

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бронирование — Гостиница "Уют"</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #3b6ea5;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 100px);
+    }
+    form {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #3b6ea5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #335d8d;
+    }
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <header>Гостиница «Уют» — Бронирование</header>
+
+  <main>
+    <form id="bookingForm">
+      <h2>Забронировать номер</h2>
+
+      <label for="checkin">Дата заезда:</label>
+      <input type="date" id="checkin" required>
+
+      <label for="checkout">Дата выезда:</label>
+      <input type="date" id="checkout" required>
+
+      <label for="roomType">Тип номера:</label>
+      <select id="roomType" required>
+        <option value="">Выберите тип номера</option>
+        <option value="standard">Стандарт</option>
+        <option value="lux">Люкс</option>
+        <option value="family">Семейный</option>
+      </select>
+
+      <label for="guests">Количество гостей:</label>
+      <input type="number" id="guests" min="1" max="6" value="1" required>
+
+      <button type="submit">Забронировать</button>
+
+      <div class="message" id="message"></div>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('bookingForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const checkin = document.getElementById('checkin').value;
+      const checkout = document.getElementById('checkout').value;
+      const roomType = document.getElementById('roomType').value;
+      const guests = document.getElementById('guests').value;
+
+      // Проверка корректности дат
+      if (new Date(checkin) >= new Date(checkout)) {
+        message.style.color = 'red';
+        message.textContent = 'Дата выезда должна быть позже даты заезда!';
+        return;
+      }
+
+      // Условное "подтверждение" бронирования
+      message.style.color = 'green';
+      message.textContent = `Бронирование успешно! 
+        Заезд: ${checkin}, 
+        Выезд: ${checkout}, 
+        Номер: ${roomType}, 
+        Гостей: ${guests}`;
+      
+      form.reset();
+    });
+  </script>
+</body>
+</html>

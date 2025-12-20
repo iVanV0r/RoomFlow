@@ -30,6 +30,9 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // EmployeeService
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
+// ClientRoomService
+builder.Services.AddScoped<IClientRoomService, ClientRoomService>();
+
 builder.Services.AddScoped<IEmployeeBuilder, EmployeeBuilder>();
 
 var app = builder.Build();

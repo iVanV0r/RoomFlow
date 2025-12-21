@@ -44,9 +44,6 @@ namespace RoomFlow.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(Employee employee)
 		{
-			if (!ModelState.IsValid)
-				return View(employee);
-
 			await _employeeService.AddAsync(employee);
 			return RedirectToAction(nameof(Index));
 		}

@@ -1,4 +1,72 @@
-﻿<a asp-controller="AdminPanel" asp-action="Index" class="btn btn-outline-secondary mx-1">Админ панель</a>
-<a asp-controller="Reservation" asp-action="Index" class="btn btn-outline-secondary mx-1">Бронирование</a>
-<a asp-controller="Payment" asp-action="Payment" class="btn btn-outline-secondary mx-1">Оплата</a>
-<a asp-controller="ClientRooms" asp-action="Index" class="btn btn-outline-secondary mx-1">Форма Клиента</a>
+﻿<div class="container mt-4">
+    <div class="row g-3">
+        <div class="col-md-3">
+            <a asp-controller="AdminPanel" asp-action="Index" class="text-decoration-none">
+                <div class="card text-center h-100 shadow-sm hover-scale">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">Админ панель</h5>
+                        <p class="card-text">Управление отелем</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-controller="Reservation" asp-action="Index" class="text-decoration-none">
+                <div class="card text-center h-100 shadow-sm hover-scale">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">Бронирование</h5>
+                        <p class="card-text">Просмотр и создание бронирований</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-controller="Payment" asp-action="Payment" class="text-decoration-none">
+                <div class="card text-center h-100 shadow-sm hover-scale">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">Оплата</h5>
+                        <p class="card-text">Обработка платежей клиентов</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a asp-controller="ClientRooms" asp-action="Index" class="text-decoration-none">
+                <div class="card text-center h-100 shadow-sm hover-scale">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">Заселение клиентов</h5>
+                        <p class="card-text">Управление номерами</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-scale {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .hover-scale:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+        }
+
+    .card {
+        cursor: pointer;
+    }
+
+    .card-title {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+        color: #555;
+    }
+</style>

@@ -12,8 +12,8 @@ using RoomFlow.Data;
 namespace RoomFlow.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251128194239_Init")]
-    partial class Init
+    [Migration("20251221170522_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,7 +129,7 @@ namespace RoomFlow.Migrations
                     b.ToTable("AdditionalServices");
                 });
 
-            modelBuilder.Entity("RoomFlow.Models.Booking", b =>
+            modelBuilder.Entity("RoomFlow.Models.ChangeLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -137,43 +137,28 @@ namespace RoomFlow.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CheckInDate")
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("GuestEmail")
+                    b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("GuestName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("GuestPhone")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Booking");
+                    b.ToTable("ChangeLogs");
                 });
 
             modelBuilder.Entity("RoomFlow.Models.Client", b =>
@@ -248,6 +233,53 @@ namespace RoomFlow.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("RoomFlow.Models.Reservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CheckInDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GuestEmail")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("GuestName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("GuestPhone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Reservations");
+                });
+
             modelBuilder.Entity("RoomFlow.Models.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -295,7 +327,7 @@ namespace RoomFlow.Migrations
 
             modelBuilder.Entity("Payment", b =>
                 {
-                    b.HasOne("RoomFlow.Models.Booking", "Booking")
+                    b.HasOne("RoomFlow.Models.Reservation", "Booking")
                         .WithMany()
                         .HasForeignKey("BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,7 +336,7 @@ namespace RoomFlow.Migrations
                     b.Navigation("Booking");
                 });
 
-            modelBuilder.Entity("RoomFlow.Models.Booking", b =>
+            modelBuilder.Entity("RoomFlow.Models.Reservation", b =>
                 {
                     b.HasOne("RoomFlow.Models.Room", "Room")
                         .WithMany("Bookings")

@@ -2,7 +2,7 @@
 
 <h2>Добавить комнату</h2>
 
-<form asp-action="Create" method="post">
+<form asp-controller="RoomsList" asp-action="Create" method="post">
     <div class="mb-3">
         <label asp-for="RoomNumber"></label>
         <input asp-for="RoomNumber" class="form-control" />

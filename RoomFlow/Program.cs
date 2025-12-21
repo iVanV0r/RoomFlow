@@ -23,15 +23,18 @@ builder.Services.AddSwaggerGen();
 
 // Репозитории
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IChangeLogRepository, ChangeLogRepository>();
+builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 
 // UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// EmployeeService
+// Сервисы
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-
-// ClientRoomService
 builder.Services.AddScoped<IClientRoomService, ClientRoomService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<IChangeLogService, ChangeLogService>();
 
 builder.Services.AddScoped<IEmployeeBuilder, EmployeeBuilder>();
 

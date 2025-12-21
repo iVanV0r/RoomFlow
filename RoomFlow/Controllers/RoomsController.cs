@@ -115,7 +115,7 @@ namespace RoomFlow.Controllers
 
 		// GET: получение истории бронирования
 		[HttpGet("{id}/bookings")]
-		public async Task<ActionResult<IEnumerable<Booking>>> GetRoomBookings(int id)
+		public async Task<ActionResult<IEnumerable<Reservation>>> GetRoomBookings(int id)
 		{
 			var room = await _context.Rooms
 				.Include(r => r.Bookings)

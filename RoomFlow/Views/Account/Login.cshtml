@@ -1,4 +1,5 @@
-﻿@{
+﻿@model RoomFlow.ViewModels.LoginViewModel;
+@{
     Layout = null;
 }
 
@@ -9,6 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Авторизация</title>
     <link rel="stylesheet" href="~/css/account.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <body>
     <div class="login-container">
@@ -19,24 +23,15 @@
 
         <form asp-controller="Account" asp-action="Login" method="post" id="loginForm">
             <div class="form-group">
-                <label for="email">Email или имя пользователя</label>
-                <input type="text" id="email" class="form-control" placeholder="Введите email или имя пользователя" required>
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label for="password">Пароль</label>
-                <div class="password-container">
-                    <input type="password" id="password" class="form-control" placeholder="Введите пароль" required>
-                    <button type="button" class="toggle-password" id="togglePassword">👁️</button>
-                </div>
-            </div>
-
-            <div class="remember-forgot">
-                <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Запомнить меня</label>
-                </div>
-                <a href="#" class="forgot-password">Забыли пароль?</a>
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control" id="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <button type="submit" class="login-btn">Войти</button>
@@ -57,10 +52,7 @@
             </button>
             <button class="social-btn facebook">
                 <svg width="18" height="18" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.
-html
-
-792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
             </button>
             <button class="social-btn twitter">
@@ -75,33 +67,34 @@ html
         </div>
     </div>
 
+    <partial name="_ValidationScriptsPartial" />
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const togglePassword = document.getElementById('togglePassword');
             const passwordInput = document.getElementById('password');
             const loginForm = document.getElementById('loginForm');
+        });
 
-            // Переключение видимости пароля
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                this.textContent = type === 'password' ? '👁️' : '🔒';
-            });
+        // Переключение видимости пароля
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.textContent = type === 'password' ? '👁️' : '🔒';
+        });
 
-            // Анимация появления элементов формы
-            const formElements = document.querySelectorAll('.form-group, .remember-forgot, .login-btn');
-            formElements.forEach((element, index) => {
-                element.style.opacity = '0';
-                element.style.transform = 'translateY(20px)';
+        // Анимация появления элементов формы
+        const formElements = document.querySelectorAll('.form-group, .remember-forgot, .login-btn');
+        formElements.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
 
-                setTimeout(() => {
-                    element.style.transition = 'opacity 0.5s, transform 0.5s';
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
+            setTimeout(() => {
+                element.style.transition = 'opacity 0.5s, transform 0.5s';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, index * 100);
         });
     </script>
 </body>
 </html>
-

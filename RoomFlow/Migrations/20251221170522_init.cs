@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RoomFlow.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,23 @@ namespace RoomFlow.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AdditionalServices", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChangeLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EntityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChangeLogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,7 +107,7 @@ namespace RoomFlow.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Booking",
+                name: "Reservations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -106,9 +123,9 @@ namespace RoomFlow.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Booking", x => x.Id);
+                    table.PrimaryKey("PK_Reservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Booking_Rooms_RoomId",
+                        name: "FK_Reservations_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id",
@@ -138,22 +155,22 @@ namespace RoomFlow.Migrations
                 {
                     table.PrimaryKey("PK_Payments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payments_Booking_BookingId",
+                        name: "FK_Payments_Reservations_BookingId",
                         column: x => x.BookingId,
-                        principalTable: "Booking",
+                        principalTable: "Reservations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_RoomId",
-                table: "Booking",
-                column: "RoomId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Payments_BookingId",
                 table: "Payments",
                 column: "BookingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_RoomId",
+                table: "Reservations",
+                column: "RoomId");
         }
 
         /// <inheritdoc />
@@ -161,6 +178,9 @@ namespace RoomFlow.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AdditionalServices");
+
+            migrationBuilder.DropTable(
+                name: "ChangeLogs");
 
             migrationBuilder.DropTable(
                 name: "Clients");
@@ -172,7 +192,7 @@ namespace RoomFlow.Migrations
                 name: "Payments");
 
             migrationBuilder.DropTable(
-                name: "Booking");
+                name: "Reservations");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

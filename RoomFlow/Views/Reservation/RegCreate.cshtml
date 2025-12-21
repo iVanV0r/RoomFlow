@@ -1,0 +1,56 @@
+@model RoomFlow.Models.Reservation
+
+@{
+    ViewData["Title"] = "Регистрация бронирования";
+}
+
+<h2>Регистрация бронирования</h2>
+
+<form asp-action="Create" method="post" class="booking-form">
+
+    <div>
+        <label>Имя гостя</label>
+        <input asp-for="GuestName" required />
+        <span asp-validation-for="GuestName"></span>
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input asp-for="GuestEmail" type="email" required />
+        <span asp-validation-for="GuestEmail"></span>
+    </div>
+
+    <div>
+        <label>Телефон</label>
+        <input asp-for="GuestPhone" required />
+        <span asp-validation-for="GuestPhone"></span>
+    </div>
+
+    <div>
+        <label>ID номера</label>
+        <input asp-for="RoomId" type="number" min="1" required />
+    </div>
+
+    <div>
+        <label>Дата заезда</label>
+        <input asp-for="CheckInDate" type="date" required />
+    </div>
+
+    <div>
+        <label>Дата выезда</label>
+        <input asp-for="CheckOutDate" type="date" required />
+    </div>
+
+    <div>
+        <label>Общая стоимость</label>
+        <input asp-for="TotalPrice" type="number" step="0.01" required />
+    </div>
+
+    <button type="submit">Зарегистрировать бронирование</button>
+</form>
+
+<a asp-action="Index">Назад к списку бронирований</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<RoomFlow.Models.ChangeLog>
+
+@{
+    ViewData["Title"] = "Журнал изменений";
+}
+
+<h1 class="mb-4">Журнал изменений</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Время</th>
+            <th>Пользователь</th>
+            <th>Сущность</th>
+            <th>Действие</th>
+            <th>Описание</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+            <tr>
+                <td>@log.Timestamp.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@log.UserName</td>
+                <td>@log.EntityName</td>
+                <td>@log.Action</td>
+                <td>@log.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -59,7 +59,7 @@ public class Payment
 	public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
 	// Навигационные свойства
-	public virtual Booking? Booking { get; set; }
+	public virtual Reservation? Booking { get; set; }
 }
 
 // Перечисление для способов оплаты

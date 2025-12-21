@@ -44,7 +44,7 @@ namespace RoomFlow.Models
 		public string? Amenities { get; set; }
 
 		// Навигационное свойство для истории бронирований
-		public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+		public virtual ICollection<Reservation> Bookings { get; set; } = new List<Reservation>();
 
 		[DataType(DataType.DateTime)]
 		[Display(Name = "Дата создания")]

@@ -1,4 +1,4 @@
-@model RoomFlow.Models.Booking
+@model RoomFlow.Models.Reservation
 
 <h2>Создать бронирование</h2>
 
@@ -22,10 +22,7 @@
     <div class="form-group">
         <label>Номер</label>
         <select asp-for="RoomId" class="form-control">
-            @foreach (var r in ViewBag.Rooms)
-            {
-                <option value="@r.Id">@r.Number</option>
-            }
+            <option value="1">123</option>
         </select>
     </div>
 

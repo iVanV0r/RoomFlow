@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RoomFlow.Models
 {
-	public class Booking
+	public class Reservation
 	{
 		[Key]
 		public int Id { get; set; }
